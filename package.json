@@ -1,0 +1,19 @@
+{
+  "name": "ai-academy-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repo thực hành cho track Thực Chiến Antigravity — dịch vụ tính phí giao hàng và mã giảm giá",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "web": "node tools/serve.mjs",
+    "db:reset": "rm -f data/shipping.db && sqlite3 data/shipping.db < src/db/seed.sql",
+    "submit": "node tools/submit.mjs",
+    "lab:state": "node tools/lab-state.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.11"
+  }
+}

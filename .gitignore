@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+
+# Token cá nhân — mỗi học viên tự tạo file này, KHÔNG commit.
+# Antigravity đọc đúng tên .agents/mcp_config.json nên không đổi tên được.
+# Repo không track bản mẫu nào: khối cấu hình lấy ở nút "Cấp token MCP" trên
+# trang module, vì chỉ chỗ đó mới có token và đúng địa chỉ server.
+# Chặn đúng một file, KHÔNG chặn cả .agents/ — .agents/skills/** phải được track.
+.agents/mcp_config.json

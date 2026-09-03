@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tính phí giao hàng</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 32rem; margin: 3rem auto; padding: 0 1rem; }
+    label { display: block; margin: 1rem 0 .3rem; font-weight: 600; }
+    input, select { width: 100%; padding: .5rem; font-size: 1rem; }
+    #result { margin-top: 1.5rem; padding: 1rem; background: #f4f4f7; border-radius: .5rem; font-size: 1.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Tính phí giao hàng</h1>
+
+  <label for="subtotal">Giá trị đơn hàng (đ)</label>
+  <input id="subtotal" type="number" value="300000">
+
+  <label for="zone">Vùng giao hàng</label>
+  <select id="zone">
+    <option value="inner">Nội thành</option>
+    <option value="suburb">Vùng ven</option>
+    <option value="remote">Vùng xa</option>
+  </select>
+
+  <div id="result">—</div>
+
+  <script>
+    // Bảng phụ phí này lặp lại ZONE_SURCHARGE trong src/pricing/calc-fee.ts.
+    const SURCHARGE = { inner: 0, suburb: 15000, remote: 40000 };
+    const BASE_FEE = 30000;
+
+    // Định dạng tiền ở front-end viết riêng, không dùng chung formatCurrency.
+    // Nó vỡ khi số có từ 7 chữ số trở lên — xem docs/scenarios.md.
+    function formatVnd(n) {
+      const s = String(Math.round(n));
+      if (s.length <= 3) return s + 'đ';
+      return s.slice(0, s.length - 3) + '.' + s.slice(s.length - 3) + 'đ';
+    }
+
+    function recompute() {
+      const subtotal = Number(document.getElementById('subtotal').value || 0);
+      const zone = document.getElementById('zone').value;
+      const fee = BASE_FEE + SURCHARGE[zone];
+      document.getElementById('result').textContent =
+        'Đơn ' + formatVnd(subtotal) + ' — phí giao ' + formatVnd(fee);
+    }
+
+    document.getElementById('subtotal').addEventListener('input', recompute);
+    document.getElementById('zone').addEventListener('change', recompute);
+    recompute();
+  </script>
+</body>
+</html>
